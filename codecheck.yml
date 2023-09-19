@@ -24,10 +24,12 @@ codechecker:
     ORCID: 0000-0001-8607-8025
 
 summary: >
-  Codecheck performed interactively as part of the Delft 2023
-  workshop.
+  Codecheck performed interactively as part of the Delft 2023 workshop.
+  The codecheck was undertaken with the first author observing and able to help fix issues.
+  This meant that the codecheck was fairly quick and any issues were resolved fairly quickly.
+  With some fixes, the code was confirmed to work and Figure 3 could be reproduced with some visual differences due to post-processing of the figures before publication, as was confirmed by the author.
   
-repository: https://github.com/codecheckers/Reproduction-HancockXXX
+repository: https://github.com/codecheckers/rmr-solver
 check_time: "2023-09-18  13:00:00"
 certificate: 2023-011
-report: https://doi.org/10.5281/zenodo.FIXME
+report: https://doi.org/10.5281/zenodo.8359199
