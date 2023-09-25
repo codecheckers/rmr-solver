@@ -26,6 +26,9 @@ codecheck:::set_zenodo_metadata(zenodo, record, metadata)
 ## If you have already uploaded the certificate once, you will need to
 ## delete it via the web page before uploading it again.
 ## codecheck:::set_zenodo_certificate(zenodo, record, "codecheck.pdf")
+## SJE: to fix -- not uploading automatically.
+## getting error:
+## Error in record$id : $ operator is invalid for atomic vectors
 
 ## You may also create a ZIP archive of of any data or code files that
 ## you think should be included in the CODECHECK's record.
