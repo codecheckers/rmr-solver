@@ -56,40 +56,215 @@ latex_summary_of_manifest(metadata, manifest_df, root)
 
 # Summary
 
+The codecheck was undertaken as part of a workshop at TU Delft on 18th
+September 2023.  The codecheck was undertaken with the first author
+observing and able to help fix issues.  This meant that the codecheck
+was fairly quick and any issues were resolved fairly quickly.
 
-Source of project
-<https://github.com/ComputationalBiomechanicsLab/rmr-solver>
+We identified Figure 3 as the key figure to reproduce.  The other
+results figures (particular 5 and 6) required significantly longer
+computation times and so were not attempted.
 
-This code was fairly straightforward to codecheck.
-[... ADD MORE INTERESTING FINDINGS HERE..]
+During the codecheck, a hidden dependency was found.  The code
+requires the Signal Processing Toolbox.  This should be documented in
+the front page.
 
-\clearpage
+We found two problems with the code base, both presumably because the
+code was developed on Windows, whereas the code was checked on a Mac.
+First, path separators needed changing from '\\' to '/'.  Second, there
+was an issue with some filenames having trailing spaces.  This was
+fixed by changing the code to work with cell arrays rather than
+vectors of characters.
+
+With these fixes, the code was confirmed to work and Figure 3 could be
+replicated.  This took under 2 hours, including all installations.
+
+
+Once the code ran, I selected the six figures corresponding to the six
+panels in Figure 3 and took a screenshot.  Scientifically, the results
+are the same, although some visual differences are clearly seen
+(e.g. y axis has been edited).  It was clear that there has been some
+post-processing of the figures before publication, as was confirmed by
+the author.
 
 # CODECHECKER notes
 
-```{r git_sha, echo=FALSE}
-gitInfo <- ""
-if(git2r::in_repository(root)) {
-  gitInfo <- paste0("This check is based on the commit `", git2r::last_commit()$sha, "`.")
-}
+The code was written in Matlab, with appropriate licence information.
+There were three external dependencies required, which were
+clearly described.  Installation of these extra software packages took
+about 20 minutes.
+
+
+I used MATLAB2023b on a mac to perform the check.  Once running, the
+code took about 5 minutes to generate the key results.
+
+To run the code, I needed to run the script "PlotResults.m".  This
+then asked for three parameters, to which I selected "FLX 2kg", "100
+Hz", "100 Hz".
+
+As well as reproducing Figure 3, we were able to reproduce one row of
+Table 1, "Flexion +" (Task 4).  These numbers were output to the terminal when
+the code was run.  This output was:
+
+```{verbatim}
+Task considered: FLX_2kg
+Considering RMR results at 100 Hz (with GH constraint)
+Considering RMR results at 100 Hz (without GH constraint)
+Considering CMC results
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Trapezius, scapula middle'}
+
+CMC:          0.03 [MAE] ,0.97 [xcorr]
+RMR (GH):     0.04 [MAE] ,0.94 [xcorr]
+RMR (no GH):  0.04 [MAE] ,0.94 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Trapezius, scapula superior'}
+
+CMC:          0.06 [MAE] ,0.94 [xcorr]
+RMR (GH):     0.08 [MAE] ,0.92 [xcorr]
+RMR (no GH):  0.08 [MAE] ,0.92 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Trapezius, scapula inferior'}
+
+CMC:          0.02 [MAE] ,0.94 [xcorr]
+RMR (GH):     0.02 [MAE] ,0.9 [xcorr]
+RMR (no GH):  0.02 [MAE] ,0.9 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Deltoid anterior'}
+
+CMC:          0.05 [MAE] ,0.96 [xcorr]
+RMR (GH):     0.05 [MAE] ,0.94 [xcorr]
+RMR (no GH):  0.04 [MAE] ,0.95 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Deltoid posterior'}
+
+CMC:          0.06 [MAE] ,0.44 [xcorr]
+RMR (GH):     0.07 [MAE] ,0.14 [xcorr]
+RMR (no GH):  0.07 [MAE] ,0.16 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Deltoid middle'}
+
+CMC:          0.06 [MAE] ,0.94 [xcorr]
+RMR (GH):     0.04 [MAE] ,0.97 [xcorr]
+RMR (no GH):  0.05 [MAE] ,0.95 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Pectoralis major clavical'}
+
+CMC:          0.04 [MAE] ,0.94 [xcorr]
+RMR (GH):     0.04 [MAE] ,0.88 [xcorr]
+RMR (no GH):  0.02 [MAE] ,0.91 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Serratus anterior'}
+
+CMC:          0.06 [MAE] ,0.93 [xcorr]
+RMR (GH):     0.06 [MAE] ,0.92 [xcorr]
+RMR (no GH):  0.06 [MAE] ,0.92 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Infraspinatus (Superior)'}
+
+CMC:          0.02 [MAE] ,0.93 [xcorr]
+RMR (GH):     0.02 [MAE] ,0.73 [xcorr]
+RMR (no GH):  0.04 [MAE] ,0.56 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Latissimus Dorsi (Medialis)'}
+
+CMC:          0.15 [MAE] ,0.84 [xcorr]
+RMR (GH):     0.16 [MAE] ,0.52 [xcorr]
+RMR (no GH):  0.16 [MAE] ,0.55 [xcorr]
+
+ 
+Warning: Integer operands are required for colon operator when used as index. 
+> In EMG_CMC_RMR_plot (line 55)
+In PlotResults (line 334)
+ 
+MAE_flx2kg
+    {'Teres major'}
+
+CMC:          0.09 [MAE] ,0.4 [xcorr]
+RMR (GH):     0.11 [MAE] ,0.06 [xcorr]
+RMR (no GH):  0.1 [MAE] ,0.05 [xcorr]
+
+ 
+>>
 ```
 
-The GitHub repo ...
-`r gitInfo`
-Code was written in ...
-I went through the following steps ...
-One hard problem was ...
-I added the following files ... using tools/methods ...
-
-This took ... minutes to complete on {a large workstation, my laptop}.
 
 ## Recommendations
 
-I suggest to the authors to consider the following suggestions for their next publication or workflow:
 
-- ...
+- Document the "Signal Processing toolbox" dependency.
 
-(document here if any of the suggestions were taken up by the authors in the meantime - do not remove any, keep track of contributions via feedback)
+- Consider portable code that works across operating systems,
+particularly with respect to directory separators.
+
+- Consider whether the external data "Thoracoscapular" could be
+included in your repository.  There are pros and cons of copying data
+into your repository versus asking users for an extra installation.
+
+- Consider writing short functions that include the key parameters
+needed to generate results, rather than needing an interactive GUI.
+
+- The results to generate Table 1 could be stored to a file, rather
+  than simply printed to the terminal.
+  
 
 \clearpage
 
@@ -129,9 +304,8 @@ for(i in c(1:nrow(manifest_df))) {
 
 ## Acknowledgements
 
-I would like to thank Dr Bhatt and his team for promptly answering any
-queries I had with this reproduction.  CODECHECK is financially
-supported by the Mozilla foundation.
+Thanks to Italo Belli for volunteering his work to be checked.
+
 
 # Citing this document
 
